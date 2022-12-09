@@ -112,6 +112,17 @@ let shuffle_test = function
       45;5;3;41;15;12;31;17;28;8;29;30;37]
   | _ -> failwith "shuffle : unsupported number (TODO)"
 
+(* l initiale en parametre : [(0, n); (21, 1)] 
+   c compteur de paires *)
+let rec creer_55paires l c = 
+   if c == 55 then l else
+      let p1 = List.nth l (List.length l - 2) in
+      let p2 = List.nth l (List.length l - 1) in
+      match p1, p2 with
+         |(_, a), (x, b) when a >= b -> creer_55paires (l @ [((x + 21 mod 55), a - b)]) (c+1)
+         |(_, a), (x, b) when a < b -> creer_55paires (l @ [((x + 21 mod 55), a - b + randmax)]) (c+1)
+         |(_,_), (_,_) -> failwith "creer_55paires pattern match error"
 
 let shuffle n =
-  shuffle_test n (* TODO: changer en une implementation complete *)
+  (* if n < 0 || n > 999_999_999 then failwith "shuffle fail(verifier le seed)" else *)
+      shuffle_test n (* TODO: changer en une implementation complete *)
