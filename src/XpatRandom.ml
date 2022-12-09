@@ -121,7 +121,23 @@ let rec creer_55paires l c =
       match p1, p2 with
          |(_, a), (x, b) when a >= b -> creer_55paires (l @ [((x + 21 mod 55), a - b)]) (c+1)
          |(_, a), (x, b) when a < b -> creer_55paires (l @ [((x + 21 mod 55), a - b + randmax)]) (c+1)
-         |(_,_), (_,_) -> failwith "creer_55paires pattern match error"
+         |(_, _), (_, _) -> failwith "creer_55paires pattern match error"
+
+(* tri insertion pour la liste de 55 paires *)
+let rec insert x l = 
+   match x, l with
+   | (_, _), [] -> [x]
+   | (a, _), (b, c) :: t -> 
+         if a <= b then x :: (b, c) :: t
+         else (b, c) :: insert x t
+
+let rec trier l = 
+      match l with
+      | [] -> []
+      | h :: t -> insert h (trier_separer t)
+
+         
+
 
 let shuffle n =
   (* if n < 0 || n > 999_999_999 then failwith "shuffle fail(verifier le seed)" else *)
