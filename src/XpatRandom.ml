@@ -112,10 +112,11 @@ let shuffle_test = function
       45;5;3;41;15;12;31;17;28;8;29;30;37]
   | _ -> failwith "shuffle : unsupported number (TODO)"
 
-(* l initiale en parametre : [(0, n); (21, 1)] 
+(* creer_55paires : int list -> int -> (int * int) list
+   l initiale en parametre : [(0, n); (21, 1)] 
    c compteur de paires *)
 let rec creer_55paires l c = 
-   if c == 55 then l else
+   if c = 55 then l else
       let p1 = List.nth l (List.length l - 2) in
       let p2 = List.nth l (List.length l - 1) in
       match p1, p2 with
@@ -123,7 +124,11 @@ let rec creer_55paires l c =
          |(_, a), (x, b) when a < b -> creer_55paires (l @ [((x + 21 mod 55), a - b + randmax)]) (c+1)
          |(_, _), (_, _) -> failwith "creer_55paires pattern match error"
 
-(* tri insertion pour la liste de 55 paires *)
+(* insert : int -> int list -> int list
+   trier : int list -> int list
+   tri insertion pour la liste de 55 paires 
+   x une paire de la liste l
+   l la liste de 55 paires *)
 let rec insert x l = 
    match x, l with
    | (_, _), [] -> [x]
@@ -132,12 +137,20 @@ let rec insert x l =
          else (b, c) :: insert x t
 
 let rec trier l = 
-      match l with
-      | [] -> []
-      | h :: t -> insert h (trier_separer t)
+   match l with
+   | [] -> []
+   | h :: t -> insert h (trier t)
 
-         
-
+(* sousliste : int list -> int -> int -> int list
+   faire la sousliste de la liste l incluant l'index x à l'index y *)
+let rec sousliste l x y =
+   match l with 
+   |[] -> []
+   |h :: t -> 
+      let tail = if y = 0 then [] 
+                  else sousliste t (x-1) (y-1) in
+                        if x > 0 then tail 
+                        else h :: tail
 
 let shuffle n =
   (* if n < 0 || n > 999_999_999 then failwith "shuffle fail(verifier le seed)" else *)
