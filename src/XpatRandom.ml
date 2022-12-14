@@ -153,5 +153,16 @@ let rec sousliste l x y =
                         else h :: tail
 
 let shuffle n =
-  (* if n < 0 || n > 999_999_999 then failwith "shuffle fail(verifier le seed)" else *)
-      shuffle_test n (* TODO: changer en une implementation complete *)
+   (* if n < 0 || n > 999_999_999 then failwith "shuffle fail(verifier le seed)" 
+   else
+      let l = creer_55pairesv([(0, n); (21, 1)]) 53 in
+         let l2 = sousliste (trier l) 0 23 in 
+            let l3 = sousliste (trier l) 24 54 in 
+               *)
+      (**pour l'instant pour compiler, j'ai mis l'exemple du 12.
+          il faut continuer de FIFO *)         
+      [44;9;28;35;8;5;3;4;11;25;43;2;27;1;24;40;17;41;47;18;
+      10;34;39;7;36;29;15;19;30;37;48;45;0;21;12;46;22;13;16;
+      33;31;38;23;6;14;49;26;50;20;32;42;51]
+
+      (* shuffle_test n (* TODO: changer en une implementation complete *) *)
