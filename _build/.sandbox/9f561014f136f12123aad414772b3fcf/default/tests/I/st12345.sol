@@ -1,0 +1,1 @@
+../../../../../default/tests/I/st12345.sol

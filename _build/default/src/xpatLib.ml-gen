@@ -1,0 +1,18 @@
+(** @canonical XpatLib.Card *)
+module Card = XpatLib__Card
+
+
+(** @canonical XpatLib.FArray *)
+module FArray = XpatLib__FArray
+
+
+(** @canonical XpatLib.Fifo *)
+module Fifo = XpatLib__Fifo
+
+
+(** @canonical XpatLib.PArray *)
+module PArray = XpatLib__PArray
+
+
+(** @canonical XpatLib.XpatRandom *)
+module XpatRandom = XpatLib__XpatRandom

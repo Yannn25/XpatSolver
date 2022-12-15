@@ -39,10 +39,7 @@ let treat_game conf =
   print_newline ();
   List.iter (fun n -> Printf.printf "%s " (Card.to_string (Card.of_num n)))
     permut;
-  match conf.mode with
-  | Check filename -> read 
-  | Search "" -> ()
-  | (* Search filename *) -> (*a compléter*)
+  print_newline ();
   print_string "C'est tout pour l'instant. TODO: continuer...\n";
   exit 0
 
