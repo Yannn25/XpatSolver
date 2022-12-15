@@ -37,7 +37,7 @@ let set_game_seed name =
 (*type coup = int * char * int
 
  Option -check qui traite la lecture du fichier solution *)
-let read filename conf col reg dep = 
+(*let read filename conf col reg dep = 
   let col_len = PArray.length col in
   let opf = open_in filename in
     try
@@ -80,7 +80,7 @@ with End_of_file ->
 
  let new_coup list = ;; 
 
-let verify_coup coup = function;; 
+let verify_coup coup = function;; *)
 
 
 
@@ -92,6 +92,7 @@ let verify_coup coup = function;;
 	| Check filename -> read filename conf.game colonnes registres depots
 	| Search "" -> ()); *)
 	(*| ( *Search filename -> a compléter ...*)
+  (* let depots = PArray.make 4 (-1) in*)
 
   let treat_game conf =
     let permut = XpatRandom.shuffle conf.seed in
@@ -100,7 +101,7 @@ let verify_coup coup = function;;
     print_newline ();
     List.iter (fun n -> Printf.printf "%s " (Card.to_string (Card.of_num n)))
       permut;
-    let depots = PArray.make 4 (-1) in
+    
     print_newline ();
     print_string "C'est tout pour l'instant. TODO: continuer...\n";
     exit 0

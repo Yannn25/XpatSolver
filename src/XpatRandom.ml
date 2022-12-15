@@ -198,5 +198,5 @@ let shuffle n =
          let f31, f24, _ = tirage 0 f31 f24 0 in
          let l52 = List.init 52 (fun n -> n) in
          List.rev (permutation 52 f31 f24 l52) ;;
-  shuffle_test n (* TODO: changer en une implementation complete *)
+  (* shuffle_test n  TODO: changer en une implementation complete *)
   
