@@ -22,11 +22,37 @@ let split_on_dot name =
   | [string1;string2] -> (string1,string2)
   | _ -> raise Not_found
 
+
+
+  type coup = int * char * int
+
+let read filename = function
+  let opf = open_in filename in
+  try
+  while true do
+    let str = input_line opf in
+    let split = String.split.onchar ' ' str in
+    verify_coup new_coup split
+    
+  done
+with End_of_file ->
+  close_in filename;
+  ;;
+
+
+let new_coup list = ;;
+
+let verify_coup coup = function;;
+
+
+
+
 let set_game_seed name =
   try
     let (sname,snum) = split_on_dot name in
     config.game <- getgame sname;
-    config.seed <- int_of_string snum
+    config.seed <- int_of_string snum;
+    (* config.mode <- *)
   with _ -> failwith ("Error: <game>.<number> expected, with <game> in "^
                       "FreeCell Seahaven MidnightOil BakersDozen")
 
@@ -49,6 +75,8 @@ let main () =
         "<filename>:\tValidate a solution file");
      ("-search", String (fun filename -> config.mode <- Search filename),
         "<filename>:\tSearch a solution and write it to a solution file")]
+        (*print_newline ();*)
+        print_string "test pour voir \t";
     set_game_seed (* pour les arguments seuls, sans option devant *)
     "XpatSolver <game>.<number> : search solution for Xpat2 game <number>";
   treat_game config
