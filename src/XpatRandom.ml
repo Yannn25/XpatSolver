@@ -7,6 +7,13 @@
 
 *)
 
+
+
+open Printf
+
+
+
+
 (* The numbers manipulated below will be in [0..randmax[ *)
 let randmax = 1_000_000_000
 
@@ -112,18 +119,6 @@ let shuffle_test = function
       45;5;3;41;15;12;31;17;28;8;29;30;37]
   | _ -> failwith "shuffle : unsupported number (TODO)"
 
-(* creer_55paires : int list -> int -> (int * int) list
-   l initiale en parametre : [(0, n); (21, 1)] 
-   c compteur de paires *)
-let rec creer_55paires l c = 
-   if c = 55 then l else
-      let p1 = List.nth l (List.length l - 2) in
-      let p2 = List.nth l (List.length l - 1) in
-      match p1, p2 with
-         |(_, a), (x, b) when a >= b -> creer_55paires (l @ [((x + 21 mod 55), a - b)]) (c+1)
-         |(_, a), (x, b) when a < b -> creer_55paires (l @ [((x + 21 mod 55), a - b + randmax)]) (c+1)
-         |(_, _), (_, _) -> failwith "creer_55paires pattern match error"
-
 (* insert : int -> int list -> int list
    trier : int list -> int list
    tri insertion pour la liste de 55 paires 
@@ -152,17 +147,61 @@ let rec sousliste l x y =
                         if x > 0 then tail 
                         else h :: tail
 
-let shuffle n =
-   (* if n < 0 || n > 999_999_999 then failwith "shuffle fail(verifier le seed)" 
-   else
-      let l = creer_55pairesv([(0, n); (21, 1)]) 53 in
-         let l2 = sousliste (trier l) 0 23 in 
-            let l3 = sousliste (trier l) 24 54 in 
-               *)
-      (**pour l'instant pour compiler, j'ai mis l'exemple du 12.
-          il faut continuer de FIFO *)         
-      [44;9;28;35;8;5;3;4;11;25;43;2;27;1;24;40;17;41;47;18;
-      10;34;39;7;36;29;15;19;30;37;48;45;0;21;12;46;22;13;16;
-      33;31;38;23;6;14;49;26;50;20;32;42;51]
+(* prendre_premier : (int * int) list -> int list
+   faire une liste avec les premiers elements de liste de paires. *)
+let rec prendre_premier l = 
+   match l with
+   | [] -> []
+   | (x, y) :: t -> y :: (prendre_premier t)
 
-      (* shuffle_test n (* TODO: changer en une implementation complete *) *)
+(* modulo : int -> int -> int
+   retourner le modulo a b *)
+let modulo a b = 
+   let x = a mod b in
+   if x >= 0 then x else x + b
+
+(* tirage : int -> fifo t -> fifo t -> int -> (fifo t -> fifo t -> int) 
+   x compteur
+   f1 fifo 
+   f2 fifo
+   d difference de f1 et f2 *)
+let rec tirage x f1 f2 d = 
+   if x = 165 then f1, f2, d else
+      let (h1, f1'), (h2, f2') = Fifo.pop f1, Fifo.pop f2 in
+      let d = modulo (h1 - h2) randmax in
+      tirage (x+1) (Fifo.push h2 f1') (Fifo.push d f2') d
+
+(* tirage : int -> fifo t -> fifo t -> int -> int list
+   x compteur
+   f1 fifo 
+   f2 fifo
+   l liste de 52 chiffres *)
+let rec permutation x f1 f2 l =
+   if x = 0 then [] else
+      let f1, f2, d = tirage 164 f1 f2 0 in
+      let d = reduce d x in 
+      (* let () = printf "%d " d in *)
+      (* permuter (x-1) f1 f2 (List.filteri (fun i a -> if i = d then false else true) l) *)
+    (List.nth l d) :: (permutation (x-1) f1 f2 (List.filteri (fun i a -> if i = d then false else true) l))
+
+
+let shuffle n =
+         let comparer_paires (a, b) (c, d) = compare a c in
+         (* creer_55paries : (int * int) list -> int -> (int * int) list
+            creer liste de paires. 
+            l liste de paires
+            i compteur *)
+         let rec creer_55paires l i = 
+            if i = 0 then l else
+               match l with
+                  | [] -> creer_55paires [(0, n)] (i-1)
+                  | _ :: [] -> creer_55paires [(21, 1); (0, n)] (i-1)
+                  |(y, y') :: (x, x') :: t -> let z = (y + 21) mod 55 in 
+                                              let z' = modulo (x' - y') randmax in
+                                              creer_55paires ((z, z') :: l) (i-1) in
+         let l55 = prendre_premier (trier (creer_55paires [] 55)) in
+         let l24, l31 = sousliste l55 0 23, sousliste l55 24 54 in
+         let f24, f31 = Fifo.of_list l24, Fifo.of_list l31 in
+         let f31, f24, _ = tirage 0 f31 f24 0 in
+         let l52 = List.init 52 (fun n -> n) in
+         List.rev (permutation 52 f31 f24 l52) ;;
