@@ -7,13 +7,6 @@
 
 *)
 
-
-
-open Printf
-
-
-
-
 (* The numbers manipulated below will be in [0..randmax[ *)
 let randmax = 1_000_000_000
 
