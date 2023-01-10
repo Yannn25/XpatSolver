@@ -96,11 +96,10 @@ let verify_coup coup = function;; *)
 
   let treat_game conf =
     let permut = XpatRandom.shuffle conf.seed in
-    Printf.printf "Voici juste la permutation de graine %d:\n" conf.seed;
-    List.iter (fun n -> print_int n; print_string " ") permut;
-    print_newline ();
-    List.iter (fun n -> Printf.printf "%s " (Card.to_string (Card.of_num n)))
-      permut;
+  Printf.printf "Voici juste la permutation de graine %d:\n" conf.seed;
+  List.iteri (fun n e -> Printf.printf "  %2d : (%2d %4s)" (n+1) e
+  (Card.to_string (Card.of_num e)); 
+  if (n mod 4) + 1 = 4 then print_newline ()) permut;
     
     print_newline ();
     print_string "C'est tout pour l'instant. TODO: continuer...\n";
