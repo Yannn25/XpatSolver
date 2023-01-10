@@ -14,7 +14,7 @@ let randmax = 1_000_000_000
 let reduce n limit =
   Int.(of_float (to_float n /. to_float randmax *. to_float limit))
 
-
+  let diff a b = if b <= a then a - b else a - b + randmax
 (** DESCRIPTION DE L'ALGORITHME DE GENERATION DES PERMUTATIONS
 
 a) Créer tout d'abord les 55 premières paires suivantes:

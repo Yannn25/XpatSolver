@@ -15,7 +15,7 @@ Exécution: './run jeu.graine'
 Nous n'avons pas de decoupage modulaire.
 
 5. (Organisation du travail) :
-Shuffle Hyejeong Im
+Shuffle Hyejeong Im (Une petite parti de EDIKEU Yann)
 Configuration Yann EDIKEU + (Tentative de lecture des fichiers solutions)
 
 6. (Misc) : ---
