@@ -1,2 +1,20 @@
-IM Hyejong @im(identifiant Gitlab) 
+1. (Identifiants)
+
+IM Hyejong @im(identifiant Gitlab) 22011133
 EDIKEU Yann @edikeu(identifiant Gitlab) 22007232
+
+2. (Fonctionnalités)
+Shuffle de la partie I
+Afficher la shuffle avec les cartes
+
+3. (Compilation et exécution)
+Compilation: 'make'
+Exécution: './run jeu.graine' 
+
+4. (Découpage modularie)
+Nous n'avons pas de decoupage modulaire.
+
+5. (Organisation du travail)
+Shuffle Hyejeong Im
+
+6. (Misc)
