@@ -102,7 +102,6 @@ let verify_coup coup = function;; *)
   if (n mod 4) + 1 = 4 then print_newline ()) permut;
     
     print_newline ();
-    print_string "C'est tout pour l'instant. TODO: continuer...\n";
     exit 0
   
   let main () =

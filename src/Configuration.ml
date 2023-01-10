@@ -1,6 +1,3 @@
-open FArray
-
-
 (* Dans la suite ne pas oublier d'implémenter l'historique des coups !!!! *)
 
 
@@ -12,7 +9,7 @@ let partie_init permutation config =
 
 let fc_bk_init permut config =
   let registre = List.make 
-  let colonne = PArray.make;
+  let colonne = PArray.make
 ;;
 
 let sh_md_init permut config = ;;
