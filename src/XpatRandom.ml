@@ -112,6 +112,9 @@ let shuffle_test = function
       45;5;3;41;15;12;31;17;28;8;29;30;37]
   | _ -> failwith "shuffle : unsupported number (TODO)"
 
+(* tri insertion pour la liste de 55 paires 
+x une paire de la liste l
+l la liste de 55 paires *)
 let rec insert x l = 
    match x, l with
    | (_, _), [] -> [x]
@@ -124,6 +127,7 @@ let rec trier l =
    | [] -> []
    | h :: t -> insert h (trier t)
 
+(* retourner la sousliste de la liste l incluant l'index x à l'index y *)
 let rec sousliste l x y =
    match l with 
    |[] -> []
@@ -133,22 +137,33 @@ let rec sousliste l x y =
                         if x > 0 then tail 
                         else h :: tail
 
+(* retourner une liste avec les premiers elements de liste de paires. *)
 let rec prendre_premier l = 
    match l with
    | [] -> []
    | (x, y) :: t -> y :: (prendre_premier t)
 
-
+(* retourner le modulo a b *)
 let modulo a b = 
    let x = a mod b in
    if x >= 0 then x else x + b
 
+(* effectuer un tirage
+    x compteur
+   f1 fifo 
+   f2 fifo
+   d difference de f1 et f2 *)
 let rec tirage x f1 f2 d = 
    if x = 165 then f1, f2, d else
       let (h1, f1'), (h2, f2') = Fifo.pop f1, Fifo.pop f2 in
       let d = modulo (h1 - h2) randmax in
       tirage (x+1) (Fifo.push h2 f1') (Fifo.push d f2') d
 
+(* retourner la liste de permutation
+   x compteur
+   f1 fifo 
+   f2 fifo
+   l liste de 52 chiffres *)
 let rec permutation x f1 f2 l =
    if x = 0 then [] else
       let f1, f2, d = tirage 164 f1 f2 0 in
